@@ -1,0 +1,33 @@
+name: Actualizar Noticias 24/7
+
+on:
+  schedule:
+    - cron: '0 */3 * * *' # Se ejecuta cada 3 horas automáticamente
+  workflow_dispatch: # Permite ejecución manual
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar Repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          pip install feedparser
+
+      - name: Ejecutar script de actualización
+        run: python update_news.py
+
+      - name: Guardar y commitear cambios en el repositorio
+        run: |
+          git config --global user.name "Voz de Sion Bot"
+          git config --global user.email "bot@vozdesionnoticias.org"
+          git add news.json
+          git commit -m "Actualización automática de noticias 24/7 [skip ci]" || exit 0
+          git push

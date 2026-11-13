@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voz de Sion Noticias | Periodismo Cristiano, Fe e Israel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sionNavy: '#0A2540',
+                        sionNavyLight: '#163A5F',
+                        sionGold: '#C59B27',
+                        sionGoldLight: '#DFB94C',
+                        sionSky: '#EBF5FF',
+                        sionSkyAccent: '#1D63B8',
+                        sionPaper: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F8FAFC; color: #1E293B; }
+        .editorial-shadow { box-shadow: 0 4px 20px -2px rgba(10, 37, 64, 0.08); }
+        .gold-underline { position: relative; display: inline-block; }
+        .gold-underline::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 56px; height: 3px; background-color: #C59B27; border-radius: 999px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes pulseGlow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        .prayer-pulse { animation: pulseGlow 0.45s ease-in-out; }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- 1. BARRA SUPERIOR -->
+    <div class="bg-sionNavy text-white text-xs border-b border-sionNavyLight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col md:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-3 text-slate-300 shrink-0">
+                <span class="flex items-center gap-1.5 font-medium">
+                    <i class="fa-regular fa-calendar text-sionGold"></i>
+                    <span id="live-date" class="capitalize">Cargando fecha...</span>
+                </span>
+                <span class="hidden sm:inline text-slate-500">|</span>
+                <span class="hidden sm:inline-flex items-center gap-1 text-sionGoldLight font-semibold">
+                    <i class="fa-solid fa-star-of-david text-[11px]"></i> Jerusalén &amp; Mundo Hispano
+                </span>
+            </div>
+            <div class="flex items-center gap-2 text-center md:text-left max-w-xl overflow-hidden">
+                <i class="fa-solid fa-book-bible text-sionGold shrink-0"></i>
+                <p id="top-scripture" class="italic text-slate-100 truncate transition-opacity duration-500">
+                    «Pedid por la paz de Jerusalén; sean prosperados los que te aman.» — Salmo 122:6
+                </p>
+                <button onclick="rotateTopScripture()" title="Siguiente versículo" class="text-sionGoldLight hover:text-white transition-colors shrink-0 ml-1 cursor-pointer">
+                    <i class="fa-solid fa-rotate text-[11px]"></i>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 text-slate-300 shrink-0">
+                <a href="#prayer-widget" class="bg-sionGold/20 hover:bg-sionGold text-sionGoldLight hover:text-sionNavy font-semibold px-2.5 py-0.5 rounded-full text-[11px] transition-all border border-sionGold/40 flex items-center gap-1">
+                    <i class="fa-solid fa-hands-praying"></i> Orar por Israel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. CABECERA PRINCIPAL -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-4 md:py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+                <a href="#" onclick="resetFilters(event)" class="flex items-center gap-3.5 group text-left">
+                    <div class="w-12 h-12 rounded-xl bg-sionNavy flex items-center justify-center border-2 border-sionGold shadow-md group-hover:scale-105 transition-transform shrink-0">
+                        <svg class="w-7 h-7 text-sionGold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3v18" /><path d="M8 21h8" /><path d="M5 7c0 4.5 3 7 7 7s7-2.5 7-7" /><path d="M8 7c0 2.8 1.8 4.5 4 4.5s4-1.7 4-4.5" /><circle cx="12" cy="2.5" r="0.8" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="font-serif text-2xl sm:text-3xl font-extrabold tracking-tight text-sionNavy leading-none">
+                            Voz de Sion <span class="text-sionGold">Noticias</span>
+                        </h1>
+                        <p class="text-xs sm:text-[13px] text-slate-500 font-medium mt-1 tracking-wide">
+                            Periodismo Cristiano Independiente • Verdad Bíblica y Solidaridad con Israel
+                        </p>
+                    </div>
+                </a>
+                <div class="w-full md:w-80 lg:w-96 relative">
+                    <input type="text" id="search-input" placeholder="Buscar en Jerusalén, Netanyahu, Trump, Milagros..." class="w-full pl-10 pr-9 py-2.5 bg-sionPaper border border-slate-300 rounded-xl text-sm text-sionNavy placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sionGold transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-sionNavy text-xs cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <nav class="border-t border-slate-100 py-2.5 overflow-x-auto no-scrollbar">
+                <ul id="category-nav" class="flex items-center space-x-1.5 sm:space-x-2 min-w-max">
+                    <li><button data-category="Todas" class="cat-btn active px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-sionNavy text-white shadow-xs cursor-pointer">Todas</button></li>
+                    <li><button data-category="Actualidad Israel" class="cat-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-sionSky hover:text-sionNavy transition-all cursor-pointer">Actualidad Israel</button></li>
+                    <li><button data-category="Fe y Profecía" class="cat-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-sionSky hover:text-sionNavy transition-all cursor-pointer">Fe y Profecía</button></li>
+                    <li><button data-category="Arqueología Bíblica" class="cat-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-sionSky hover:text-sionNavy transition-all cursor-pointer">Arqueología Bíblica</button></li>
+                    <li><button data-category="Solidaridad Cristiana" class="cat-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-sionSky hover:text-sionNavy transition-all cursor-pointer">Solidaridad Cristiana</button></li>
+                    <li><button data-category="Opinión" class="cat-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-sionSky hover:text-sionNavy transition-all cursor-pointer">Opinión</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 3. CINTA DE ÚLTIMA HORA -->
+    <div class="bg-sionSky border-b border-blue-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 overflow-hidden flex-1 min-w-0">
+                <span class="bg-sionNavy text-sionGoldLight text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shrink-0 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Última Hora
+                </span>
+                <p id="breaking-ticker-text" class="text-xs sm:text-sm font-medium text-sionNavy truncate transition-opacity duration-300">
+                    Respaldo inquebrantable a la soberanía de Israel, al primer ministro Benjamin Netanyahu y al presidente Donald Trump.
+                </p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button onclick="openCurrentTickerArticle()" class="text-xs font-bold text-sionSkyAccent hover:text-sionNavy underline cursor-pointer">Leer nota &rarr;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <section id="hero-section" class="mb-12">
+            <article class="bg-white rounded-2xl overflow-hidden editorial-shadow border border-slate-200/90 grid grid-cols-1 lg:grid-cols-12">
+                <div class="lg:col-span-7 relative min-h-[280px] sm:min-h-[380px] lg:min-h-[450px] overflow-hidden bg-sionNavy">
+                    <img src="https://images.unsplash.com/photo-1542743408-218cc173cda0?auto=format&fit=crop&w=1300&q=85" alt="Jerusalén" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="bg-sionNavy/95 text-sionGoldLight border border-sionGold/50 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg">Edición Especial • #IsraelNoEstaSolo</span>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-white">
+                    <div>
+                        <div class="flex items-center gap-2 text-xs font-semibold text-sionSkyAccent uppercase tracking-wider mb-3">
+                            <span>Jerusalén &amp; Washington</span> • <span>Actualización 24/7</span>
+                        </div>
+                        <h2 class="font-serif text-2xl sm:text-3xl lg:text-[32px] font-extrabold text-sionNavy leading-tight mb-4">
+                            Alianza inquebrantable: La defensa de Israel y el liderazgo de Netanyahu y Trump ante los tiempos proféticos
+                        </h2>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+                            El respaldo firme del presidente Donald Trump y la determinación inalterable del primer ministro Benjamin Netanyahu consolidan el bastión de libertad y cumplimiento bíblico en Tierra Santa.
+                        </p>
+                    </div>
+                    <div class="pt-5 border-t border-slate-100">
+                        <button onclick="openArticleModal('hero-featured')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-sionNavy hover:bg-sionNavyLight text-white font-semibold px-6 py-3.5 rounded-xl transition-all shadow-md border-b-2 border-sionGold cursor-pointer">
+                            <span>Leer análisis editorial</span> <i class="fa-solid fa-arrow-right text-sionGoldLight"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- GRID DE NOTICIAS + SIDEBAR -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-7 pb-3 border-b border-slate-200">
+                    <h3 id="grid-heading" class="font-serif text-2xl sm:text-3xl font-bold text-sionNavy gold-underline">Cobertura Editorial y Reportajes</h3>
+                    <span id="articles-counter" class="text-xs font-semibold text-sionNavy bg-sionSky px-3.5 py-1.5 rounded-full border border-blue-200 self-start sm:self-auto">Cargando artículos...</span>
+                </div>
+                <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                <div id="empty-state" class="hidden bg-white rounded-2xl p-10 text-center border border-slate-200 editorial-shadow">
+                    <h4 class="font-serif text-xl font-bold text-sionNavy mb-2">No se encontraron artículos</h4>
+                    <button onclick="resetFilters()" class="mt-4 px-5 py-2.5 bg-sionNavy text-white text-sm font-semibold rounded-xl cursor-pointer">Ver todas las noticias</button>
+                </div>
+            </div>
+
+            <!-- SIDEBAR LATERAL -->
+            <aside class="lg:col-span-4 space-y-7">
+                <div class="bg-white rounded-2xl p-6 editorial-shadow border border-slate-200/90 border-t-4 border-sionNavy">
+                    <span class="text-[11px] font-bold uppercase tracking-widest text-sionSkyAccent bg-sionSky px-2.5 py-1 rounded-md">Línea Editorial</span>
+                    <h4 class="font-serif text-lg font-bold text-sionNavy mt-3 mb-2">Firmeza y Respaldo Total</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                        Voz de Sion defiende con pasión la soberanía de Israel. Respaldamos firmemente la continuidad y el liderazgo de Benjamin Netanyahu y el presidente Donald Trump en la protección de la libertad occidental y judeocristiana.
+                    </p>
+                    <span class="text-[11px] font-bold text-sionGold uppercase tracking-wider">#IsraelNoEstaSolo • #TrumpNetanyahu</span>
+                </div>
+
+                <!-- BIOGRAFÍAS (Con la etiqueta exacta "Presidente de EE. UU.") -->
+                <div class="bg-white rounded-2xl p-6 editorial-shadow border border-slate-200/90">
+                    <span class="text-[11px] font-bold uppercase tracking-widest text-sionNavy bg-sionGold/25 px-2.5 py-1 rounded-md inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-landmark text-sionGold"></i> Biografías y Liderazgo
+                    </span>
+                    <h4 class="font-serif text-lg font-bold text-sionNavy mt-3 mb-4">Defensores de Sion y la Libertad</h4>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-xl bg-sionPaper border border-slate-200/90">
+                            <div class="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+                                <h5 class="font-serif font-bold text-sm text-sionNavy">Benjamin Netanyahu</h5>
+                                <span class="text-[10px] font-bold bg-sionNavy text-sionGoldLight px-2 py-0.5 rounded">Primer Ministro de Israel</span>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Estadista histórico y pilar indiscutible de la seguridad de Israel. Reconocido por su determinación inquebrantable frente a las amenazas hostiles y su defensa firme de la soberanía judía en Jerusalén.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sionPaper border border-slate-200/90">
+                            <div class="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+                                <h5 class="font-serif font-bold text-sm text-sionNavy">Donald J. Trump</h5>
+                                <span class="text-[10px] font-bold bg-sionSkyAccent text-white px-2 py-0.5 rounded">Presidente de EE. UU.</span>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                El líder estadounidense más comprometido con Israel. Artífice de los históricos Acuerdos de Abraham y del traslado de la embajada de EE. UU. a Jerusalén, marcando una era de oro en la alianza bilateral.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WIDGET DE ORACIÓN -->
+                <div id="prayer-widget" class="bg-sionNavy text-white rounded-2xl p-6 editorial-shadow border-t-4 border-sionGold relative overflow-hidden">
+                    <div class="relative z-10">
+                        <span class="text-[11px] font-bold uppercase tracking-widest text-sionGoldLight bg-white/10 px-2.5 py-1 rounded-md">Clamor Global Continuo</span>
+                        <h3 class="font-serif text-xl font-bold text-white mt-3 mb-2">Oración por la Paz de Jerusalén</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">Únete a miles de creyentes que interceden por la protección de Israel y la sabiduría de sus gobernantes.</p>
+                        <div class="bg-sionNavyLight/90 border border-sionGold/30 rounded-xl p-4 text-center mb-4">
+                            <p class="text-[11px] uppercase tracking-wider text-slate-300 mb-1">Oraciones elevadas hoy</p>
+                            <div id="prayer-count-display" class="font-serif text-3xl sm:text-4xl font-extrabold text-sionGoldLight">48,924</div>
+                        </div>
+                        <button id="pray-btn" onclick="joinPrayer()" class="w-full py-3.5 bg-sionGold hover:bg-sionGoldLight text-sionNavy font-bold rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-hands-praying"></i> <span id="pray-btn-text">Unirme en Oración</span>
+                        </button>
+                        <div id="prayer-confirmation" class="hidden mt-4 p-3.5 rounded-xl bg-white/10 border border-sionGold/40 text-xs text-slate-100 leading-relaxed">
+                            <p class="font-bold text-sionGoldLight mb-1"><i class="fa-solid fa-circle-check"></i> ¡Gracias por levantar clamor!</p>
+                            <p class="italic">«Señor Todopoderoso, guarda las puertas de Jerusalén y fortalece a Israel y a sus líderes. Amén.»</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VERSÍCULO DEL DÍA -->
+                <div class="bg-sionSky rounded-2xl p-6 border border-blue-200/90 editorial-shadow">
+                    <span class="text-xs font-bold uppercase tracking-wider text-sionNavy flex items-center gap-1.5 mb-3">
+                        <i class="fa-solid fa-book-open text-sionGold"></i> Versículo del Día
+                    </span>
+                    <blockquote class="font-serif italic text-lg text-sionNavy leading-relaxed mb-3">
+                        «Bendeciré a los que te bendijeren, y a los que te maldijeren maldeciré; y serán benditas en ti todas las familias de la tierra.»
+                    </blockquote>
+                    <p class="text-xs font-bold text-sionGold uppercase tracking-wider">— Génesis 12:3</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer" class="bg-sionNavy text-slate-300 border-t-4 border-sionGold mt-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+            <p>&copy; 2026 Voz de Sion Noticias. Todos los derechos reservados.</p>
+            <p class="italic text-sionGoldLight">«Por amor de Sion no callaré» — Isaías 62:1</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE LECTURA -->
+    <div id="article-modal" class="fixed inset-0 z-50 hidden bg-sionNavy/80 backdrop-blur-xs overflow-y-auto p-4 sm:p-6 lg:p-10">
+        <div class="max-w-3xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200 my-4">
+            <div class="bg-sionNavy text-white px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+                <span id="modal-category" class="text-xs font-bold uppercase tracking-wider bg-sionGold text-sionNavy px-3 py-1 rounded-md">Categoría</span>
+                <button onclick="closeArticleModal()" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="w-full h-64 sm:h-80 bg-sionNavy overflow-hidden">
+                <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
+            </div>
+            <div class="p-6 sm:p-10">
+                <h2 id="modal-title" class="font-serif text-2xl sm:text-3xl font-extrabold text-sionNavy leading-tight mb-6"></h2>
+                <div id="modal-content" class="space-y-4 text-slate-700 text-base leading-relaxed"></div>
+                <div class="mt-8 pt-6 border-t border-slate-200 flex justify-end">
+                    <button onclick="closeArticleModal()" class="px-5 py-2.5 bg-sionNavy text-white font-semibold rounded-xl text-sm cursor-pointer">Cerrar lectura</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <script>
+        const SCRIPTURES = [
+            "«Pedid por la paz de Jerusalén; sean prosperados los que te aman.» — Salmo 122:6",
+            "«Bendeciré a los que te bendijeren... y serán benditas en ti todas las familias de la tierra.» — Génesis 12:3",
+            "«Por amor de Sion no callaré, y por amor de Jerusalén no descansaré.» — Isaías 62:1"
+        ];
+        let scriptureIdx = 0;
+        function rotateTopScripture() {
+            scriptureIdx = (scriptureIdx + 1) % SCRIPTURES.length;
+            document.getElementById('top-scripture').textContent = SCRIPTURES[scriptureIdx];
+        }
+
+        const HERO_ARTICLE = {
+            id: "hero-featured",
+            title: "Alianza inquebrantable: La defensa de Israel y el liderazgo de Netanyahu y Trump ante los tiempos proféticos",
+            category: "Actualidad Israel",
+            date: "Actualizado 24/7",
+            author: "Redacción Política • Jerusalén y Washington",
+            readTime: "6 min lectura",
+            image: "https://images.unsplash.com/photo-1542743408-218cc173cda0?auto=format&fit=crop&w=1300&q=85",
+            paragraphs: [
+                "JERUSALÉN — En medio de los tiempos decisivos que vive el mundo moderno, el liderazgo del primer ministro Benjamin Netanyahu junto al respaldo histórico del presidente Donald Trump representan un baluarte inquebrantable para la seguridad y la libertad de Israel.",
+                "Los analistas coinciden en que la firmeza de estas administraciones ha frenado los planes hostiles en la región, consolidando a Jerusalén como el centro indiscutible de la soberanía del pueblo del pacto.",
+                "Desde Voz de Sion reiteramos nuestro compromiso absoluto de informar y respaldar de manera permanente la permanencia, el esfuerzo y la fortaleza de quienes defienden con valentía los intereses sagrados de Israel y Occidente."
+            ]
+        };
+
+        let ARTICLES = [];
+        let currentCategory = "Todas";
+        let currentSearch = "";
+        let prayerCount = 48924;
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const now = new Date();
+            document.getElementById("live-date").textContent = now.toLocaleDateString("es-ES", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+            try {
+                // Evita caché para cargar noticias nuevas diariamente
+                const response = await fetch("news.json?v=" + new Date().getTime());
+                if (response.ok) {
+                    ARTICLES = await response.json();
+                    if (ARTICLES.length > 0) {
+                        document.getElementById("breaking-ticker-text").textContent = ARTICLES[0].title;
+                    }
+                }
+            } catch (error) {
+                console.warn("Usando respaldo local.");
+            }
+
+            renderArticlesGrid();
+
+            document.querySelectorAll(".cat-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    currentCategory = btn.getAttribute("data-category");
+                    document.querySelectorAll(".cat-btn").forEach(b => b.className = "cat-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-sionSky hover:text-sionNavy transition-all cursor-pointer");
+                    btn.className = "cat-btn active px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-sionNavy text-white shadow-xs cursor-pointer";
+                    renderArticlesGrid();
+                });
+            });
+
+            document.getElementById("search-input").addEventListener("input", (e) => {
+                currentSearch = e.target.value.toLowerCase();
+                document.getElementById("clear-search-btn").classList.toggle("hidden", currentSearch.length === 0);
+                renderArticlesGrid();
+            });
+        });
+
+        function renderArticlesGrid() {
+            const grid = document.getElementById("articles-grid");
+            const emptyState = document.getElementById("empty-state");
+            
+            const filtered = ARTICLES.filter(art => {
+                const matchesCat = currentCategory === "Todas" || art.category === currentCategory;
+                const matchesSearch = currentSearch === "" || art.title.toLowerCase().includes(currentSearch) || (art.summary && art.summary.toLowerCase().includes(currentSearch));
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById("articles-counter").textContent = `Mostrando ${filtered.length} artículos`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+            grid.innerHTML = filtered.map(art => `
+                <article class="bg-white rounded-2xl overflow-hidden editorial-shadow border border-slate-200/90 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group">
+                    <div>
+                        <div class="relative h-52 overflow-hidden bg-sionNavy">
+                            <img src="${art.image}" onerror="this.src='https://images.unsplash.com/photo-1542743408-218cc173cda0?auto=format&fit=crop&w=900&q=80'" alt="${art.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 bg-sionNavy/90 text-sionGoldLight text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">${art.category}</span>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-2 text-xs text-slate-400 font-medium mb-2"><span>${art.date}</span> • <span>${art.readTime}</span></div>
+                            <h4 class="font-serif text-xl font-bold text-sionNavy group-hover:text-sionSkyAccent transition-colors leading-snug mb-2.5">
+                                <button onclick="openArticleModal('${art.id}')" class="text-left cursor-pointer">${art.title}</button>
+                            </h4>
+                            <p class="text-sm text-slate-600 leading-relaxed line-clamp-3">${art.summary}</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-slate-500">${art.author}</span>
+                        <button onclick="openArticleModal('${art.id}')" class="text-xs font-bold text-sionNavy hover:text-sionGold flex items-center gap-1.5 cursor-pointer">Leer nota &rarr;</button>
+                    </div>
+                </article>
+            `).join("");
+        }
+
+        function openArticleModal(id) {
+            const art = id === HERO_ARTICLE.id ? HERO_ARTICLE : ARTICLES.find(a => a.id === id);
+            if (!art) return;
+            document.getElementById("modal-category").textContent = art.category;
+            document.getElementById("modal-image").src = art.image;
+            document.getElementById("modal-title").textContent = art.title;
+            
+            if (art.content) {
+                document.getElementById("modal-content").innerHTML = art.content;
+            } else if (art.paragraphs) {
+                document.getElementById("modal-content").innerHTML = art.paragraphs.map(p => `<p>${p}</p>`).join("");
+            }
+            document.getElementById("article-modal").classList.remove("hidden");
+            document.body.classList.add("overflow-hidden");
+        }
+
+        function closeArticleModal() {
+            document.getElementById("article-modal").classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        function joinPrayer() {
+            prayerCount++;
+            const display = document.getElementById("prayer-count-display");
+            display.textContent = prayerCount.toLocaleString("es-ES");
+            display.classList.add("prayer-pulse");
+            setTimeout(() => display.classList.remove("prayer-pulse"), 500);
+            document.getElementById("prayer-confirmation").classList.remove("hidden");
+            document.getElementById("pray-btn-text").textContent = "Oración registrada con éxito";
+        }
+
+        function clearSearch() {
+            document.getElementById("search-input").value = "";
+            currentSearch = "";
+            document.getElementById("clear-search-btn").classList.add("hidden");
+            renderArticlesGrid();
+        }
+
+        function resetFilters() {
+            currentCategory = "Todas";
+            clearSearch();
+            renderArticlesGrid();
+        }
+
+        function openCurrentTickerArticle() {
+            if (ARTICLES.length > 0) openArticleModal(ARTICLES[0].id);
+        }
+    </script>
+</body>
+</html>
